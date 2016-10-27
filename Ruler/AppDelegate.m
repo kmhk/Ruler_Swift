@@ -17,6 +17,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Override point for customization after application launch.
+	self.motionManager = [[CMMotionManager alloc]init];
+	//[self startDeviceMotion];
+	
 	return YES;
 }
 
@@ -46,6 +49,25 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+/*- (void)startDeviceMotion {
+	// Create a CMMotionManager
+	self.motionManager = [[CMMotionManager alloc] init];
+ 
+	// Tell CoreMotion to show the compass calibration HUD when required
+	// to provide true north-referenced attitude
+	self.motionManager.showsDeviceMovementDisplay = YES;
+	self.motionManager.deviceMotionUpdateInterval = 1.0 / 60.0;
+ 
+	// Attitude that is referenced to true north
+	[self.motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXTrueNorthZVertical];
+}
+
+
+- (void)stopDeviceMotion {
+	[self.motionManager stopDeviceMotionUpdates];
+}*/
+
 
 
 @end
