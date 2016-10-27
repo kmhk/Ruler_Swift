@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  RulerView.h
 //  Ruler
 //
 //  Created by Com on 26/10/2016.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface RulerView : UIView
 
 @end
-
