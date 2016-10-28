@@ -14,7 +14,7 @@
 
 
 #define MAX_HEIGHT		3000
-
+#define kACC_WEIGHT		0.0
 
 
 @interface MainViewController () <UIScrollViewDelegate>
@@ -23,10 +23,15 @@
 @property (weak, nonatomic) IBOutlet UIView *viewContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *imgBkSensor;
 @property (weak, nonatomic) IBOutlet UIImageView *imgSensor;
+@property (weak, nonatomic) IBOutlet UILabel *roationLabel;
 
 @property (nonatomic) RulerView *rulerView;
 @property (nonatomic) CGRect rtSensor;
 
+@property (nonatomic, assign) double				gravityX;
+@property (nonatomic, assign) double				gravityY;
+@property (nonatomic, assign) double				gravityZ;
+@property (nonatomic, assign) BOOL					isRoationInted;
 @end
 
 
@@ -113,7 +118,9 @@
 #pragma mark - motion action
 
 - (void)startMotionUpdates {
- 
+	self.gravityX = self.gravityY = self.gravityZ = 0;
+	self.isRoationInted = NO;
+	
 	// Determine the update interval
 	NSTimeInterval updateInterval = (1.f/30.f);
  
@@ -127,12 +134,38 @@
 	if ([mManager isAccelerometerAvailable] == YES) {
 		// Assign the update interval to the motion manager
 		[mManager setAccelerometerUpdateInterval:updateInterval];
+		
 		[mManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
-			CGFloat rotation = atan2(accelerometerData.acceleration.x, accelerometerData.acceleration.y) - M_PI;
-			//NSLog(@"%f, %f, %f, %f", accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z, rotation);
-			//CMRotationRate rotation = mManager.deviceMotion.rotationRate;
-			//NSLog(@"%f, %f, %f, %f", rotation.x, rotation.y, rotation.z, rotation);
-			self.imgSensor.frame = (CGRect){self.rtSensor.origin.x + rotation * 5, self.rtSensor.origin.y, self.rtSensor.size.width, self.rtSensor.size.height};
+			
+			CMAcceleration gravity = mManager.deviceMotion.gravity;
+			if (_isRoationInted) {
+				weakSelf.gravityX = weakSelf.gravityX * kACC_WEIGHT  + gravity.x * (1.0 - kACC_WEIGHT);
+				weakSelf.gravityY = weakSelf.gravityY * kACC_WEIGHT  + gravity.y * (1.0 - kACC_WEIGHT);
+				weakSelf.gravityZ = weakSelf.gravityZ * kACC_WEIGHT  + gravity.z * (1.0 - kACC_WEIGHT);
+			} else {
+				if (gravity.x != 0 && gravity.y != 0 && gravity.z != 0) {
+					weakSelf.gravityX = gravity.x;
+					weakSelf.gravityX = gravity.y;
+					weakSelf.gravityX = gravity.z;
+					
+					_isRoationInted = YES;
+				}
+			}
+			
+			if (_isRoationInted) {
+				double gravity = sqrt(weakSelf.gravityX * weakSelf.gravityX + weakSelf.gravityY * weakSelf.gravityY + weakSelf.gravityZ * weakSelf.gravityZ);
+				double roationInXY = acos(self.gravityY / gravity) * 180 / M_PI;
+				NSInteger rotationOfXY = (NSInteger)(-180 + acos(weakSelf.gravityZ / gravity) * 180 / M_PI);
+				//weakSelf.roationLabel.text = [NSString stringWithFormat:@"%ld", (long)rotationOfXY];
+				//self.roationLabel.transform = CGAffineTransformMakeRotation(roationInXY);
+				
+				
+				CGFloat flag = (roationInXY - 90.0 < 0)? -1: 1;
+				CGFloat y = (abs(rotationOfXY) % 90) * 2;
+				y = flag * (y > 125? 125.0: y);
+				NSLog(@"%f. %f", roationInXY, y);
+				weakSelf.imgSensor.frame = (CGRect){weakSelf.rtSensor.origin.x, weakSelf.rtSensor.origin.y + y, weakSelf.rtSensor.size.width, weakSelf.rtSensor.size.height};
+			}
 		}];
 	}
 	

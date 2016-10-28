@@ -70,7 +70,7 @@
 			BOOL isMul = (count / 10) % 10 == 0;
 			UIFont *font = [UIFont systemFontOfSize:16.0];
 			UIColor *foreColor = isMul ? [UIColor whiteColor]: [UIColor blackColor];
-			UIColor *backColor = isMul ? [UIColor blackColor]: [UIColor whiteColor];
+			UIColor *backColor = isMul ? [UIColor blackColor]: [UIColor clearColor];
 			NSString *number = [NSString stringWithFormat:@"%ld", count / 10];
 			
 			CGSize sz = [number sizeWithAttributes:@{NSFontAttributeName: font}];

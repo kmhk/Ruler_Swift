@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3ABE59A51DC2B8CC00080F17 /* ruler_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ABE59A41DC2B8CC00080F17 /* ruler_bg.png */; };
 		F368C5EC1DC1ECDE00E742A8 /* accel_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F368C5EA1DC1ECDE00E742A8 /* accel_landscape.png */; };
 		F368C5ED1DC1ECDE00E742A8 /* accel_portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F368C5EB1DC1ECDE00E742A8 /* accel_portrait.png */; };
 		F3B592851DC08BBF00559A80 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F3B592841DC08BBF00559A80 /* main.m */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3ABE59A41DC2B8CC00080F17 /* ruler_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ruler_bg.png; path = Resources/ruler_bg.png; sourceTree = "<group>"; };
 		F368C5EA1DC1ECDE00E742A8 /* accel_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = accel_landscape.png; path = Resources/accel_landscape.png; sourceTree = "<group>"; };
 		F368C5EB1DC1ECDE00E742A8 /* accel_portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = accel_portrait.png; path = Resources/accel_portrait.png; sourceTree = "<group>"; };
 		F3B592801DC08BBF00559A80 /* Ruler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ruler.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +98,7 @@
 		F3B592A01DC14E9400559A80 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3ABE59A41DC2B8CC00080F17 /* ruler_bg.png */,
 				F368C5EA1DC1ECDE00E742A8 /* accel_landscape.png */,
 				F368C5EB1DC1ECDE00E742A8 /* accel_portrait.png */,
 				F3B592A51DC1623D00559A80 /* reset.png */,
@@ -164,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F368C5EC1DC1ECDE00E742A8 /* accel_landscape.png in Resources */,
+				3ABE59A51DC2B8CC00080F17 /* ruler_bg.png in Resources */,
 				F3B592A61DC1623D00559A80 /* reset.png in Resources */,
 				F368C5ED1DC1ECDE00E742A8 /* accel_portrait.png in Resources */,
 				F3B592A41DC14EB100559A80 /* sens.png in Resources */,
