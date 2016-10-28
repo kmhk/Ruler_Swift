@@ -19,8 +19,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ruler_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-gF-0SY">
-                                <frame key="frameInset" width="100.00%" height="100.00%"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <frame key="frameInset"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFp-h2-mKO">
                                 <frame key="frameInset"/>
@@ -33,30 +33,29 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pMG-zq-ewP">
                                 <frame key="frameInset" minX="49.83%" minY="44" width="80" height="83"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="reset.png"/>
                                 <connections>
                                     <action selector="onBtnReset:" destination="BYZ-38-t0r" eventType="touchDown" id="QFI-Wl-fsO"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="En7-Jt-jHF">
-                                <frame key="frameInset" minX="49.83%" minY="49.86%" width="88" height="312"/>
+                                <frame key="frameInset" minX="49.73%" minY="49.92%" width="192" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="accel_portrait.png" translatesAutoresizingMaskIntoConstraints="NO" id="FUk-Ys-YYb">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="accel_landscape.png" translatesAutoresizingMaskIntoConstraints="NO" id="FUk-Ys-YYb">
                                         <frame key="frameInset"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sens.png" translatesAutoresizingMaskIntoConstraints="NO" id="t1Z-qY-0LO">
-                                        <frame key="frameInset" minX="50.00%" minY="50.00%" width="46" height="62"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="390-xr-7ta">
-                                        <frame key="frameInset" minX="50.00%" minY="50.00%" width="100" height="100"/>
+                                        <frame key="frameInset" minX="50.00%" minY="0.0%" width="76" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sens.png" translatesAutoresizingMaskIntoConstraints="NO" id="t1Z-qY-0LO">
+                                        <frame key="frameInset" minX="50.96%" minY="60.00%" width="35" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -64,10 +63,12 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
+                        <outlet property="btnReset" destination="pMG-zq-ewP" id="yWV-x2-0kr"/>
                         <outlet property="imgBkSensor" destination="FUk-Ys-YYb" id="s1f-6x-zZ5"/>
                         <outlet property="imgSensor" destination="t1Z-qY-0LO" id="EgP-du-GD1"/>
                         <outlet property="roationLabel" destination="390-xr-7ta" id="LyC-Xd-UO2"/>
                         <outlet property="scrollView" destination="YFp-h2-mKO" id="M5Y-iC-l3u"/>
+                        <outlet property="viewBackground" destination="kl6-gF-0SY" id="fSv-ee-bgn"/>
                         <outlet property="viewContainer" destination="En7-Jt-jHF" id="gV3-Pd-Bub"/>
                     </connections>
                 </viewController>
@@ -77,8 +78,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="accel_portrait.png" width="239" height="758"/>
-        <image name="reset.png" width="189" height="239"/>
+        <image name="accel_landscape.png" width="758" height="239"/>
         <image name="ruler_bg.png" width="3125" height="5558"/>
         <image name="sens.png" width="421" height="658"/>
     </resources>

@@ -14,6 +14,8 @@
 	self = [super init];
 	if (self) {
 		self.backgroundColor = [UIColor clearColor];
+		
+		_isLandscape = NO;
 	}
 	
 	return self;
@@ -23,6 +25,8 @@
 	self = [super initWithCoder:aDecoder];
 	if (self) {
 		self.backgroundColor = [UIColor clearColor];
+		
+		_isLandscape = NO;
 	}
 	
 	return self;
@@ -32,6 +36,8 @@
 	self = [super initWithFrame:frame];
 	if (self) {
 		self.backgroundColor = [UIColor clearColor];
+		
+		_isLandscape = NO;
 	}
 	
 	return self;
@@ -50,7 +56,9 @@
 	float linesWidthShort = 15.0;
 	float linesWidthLong = 24.0;
 	
-	for (i = 20, count = 0; i <= self.bounds.size.height; i = i + linesDist, count++)
+	float max = self.isLandscape == YES? self.bounds.size.width: self.bounds.size.height;
+	
+	for (i = 20, count = 0; i <= max; i = i + linesDist, count++)
 	{
 		bool isLong = (int)count % 10 == 0;
 		bool isMiddle = (int)count % 5 == 0;
@@ -60,11 +68,12 @@
 		[[UIColor blackColor] setFill];
 		
 		// draw left ruler
-		UIRectFill( (CGRect){0, i, linesWidth, 1} );
-		
-		// draw right ruler
-		//UIRectFill( (CGRect){rect.size.width - linesWidth, i, linesWidth, 1} );
-		
+		if (_isLandscape == NO) {
+			UIRectFill( (CGRect){0, i, linesWidth, 1} );
+		} else {
+			UIRectFill( (CGRect){i, rect.size.height - linesWidth, 1, linesWidth} );
+		}
+
 		// draw text
 		if (isLong) {
 			BOOL isMul = (count / 10) % 10 == 0;
@@ -76,21 +85,23 @@
 			CGSize sz = [number sizeWithAttributes:@{NSFontAttributeName: font}];
 			
 			[backColor setFill];
-			UIRectFill((CGRect){linesWidth + 5, i - (sz.height / 2), sz.width + 10, sz.height + 8});
-			//UIRectFill((CGRect){rect.size.width - linesWidth - 15 - sz.width, i - 5, sz.width + 10, sz.height + 10});
-			
-			[number drawInRect:(CGRect){linesWidth + 10, i - 5, sz.width, sz.height}
-				withAttributes:@{NSFontAttributeName: font,
-								 NSForegroundColorAttributeName: foreColor}];
-//			[number drawInRect:(CGRect){rect.size.width - linesWidth - 10 - sz.width, y, sz.width, sz.height}
-//				withAttributes:@{NSFontAttributeName: font,
-//								 NSForegroundColorAttributeName: foreColor}];
+			if (_isLandscape == NO) {
+				UIRectFill((CGRect){linesWidth + 5, i - (sz.height / 2), sz.width + 10, sz.height + 8});
+				[number drawInRect:(CGRect){linesWidth + 10, i - 5, sz.width, sz.height}
+					withAttributes:@{NSFontAttributeName: font,
+									 NSForegroundColorAttributeName: foreColor}];
+			} else {
+				UIRectFill((CGRect){i - (sz.width / 2), rect.size.height - linesWidth - 5 - sz.height, sz.width, sz.height});
+				[number drawInRect:(CGRect){i - (sz.width / 2), rect.size.height - linesWidth - 5 - sz.height, sz.width, sz.height}
+					withAttributes:@{NSFontAttributeName: font,
+									 NSForegroundColorAttributeName: foreColor}];
+			}
 		}
 	}
 	
 	
 	linesDist = linesDist * 304.8 / 10 / 10;
-	for (i = 20, count = 0; i <= self.bounds.size.height; i = i + linesDist, count++)
+	for (i = 20, count = 0; i <= max; i = i + linesDist, count++)
 	{
 		bool isLong = (int)count % 10 == 0;
 		bool isMiddle = (int)count % 5 == 0;
@@ -100,28 +111,29 @@
 		[[UIColor blackColor] setFill];
 		
 		// draw right ruler
-		UIRectFill( (CGRect){rect.size.width - linesWidth, i, linesWidth, 1} );
+		if (_isLandscape == NO) {
+			UIRectFill( (CGRect){rect.size.width - linesWidth, i, linesWidth, 1} );
+		} else {
+			UIRectFill( (CGRect){i, 0, 1 , linesWidth} );
+		}
 		
 		// draw text
 		if (isLong) {
-			//BOOL isMul = (count / 10) % 10 == 0;
 			UIFont *font = [UIFont systemFontOfSize:16.0];
 			UIColor *foreColor = [UIColor blackColor];
-			//UIColor *backColor = isMul ? [UIColor blackColor]: [UIColor whiteColor];
 			NSString *number = [NSString stringWithFormat:@"%ld", count / 10];
 			
 			CGSize sz = [number sizeWithAttributes:@{NSFontAttributeName: font}];
-			
-			//[backColor setFill];
-			//UIRectFill((CGRect){linesWidth + 5, i - (sz.height / 2), sz.width + 10, sz.height + 8});
-			//UIRectFill((CGRect){rect.size.width - linesWidth - 15 - sz.width, i - 5, sz.width + 10, sz.height + 10});
-			
-//			[number drawInRect:(CGRect){linesWidth + 10, i - 5, sz.width, sz.height}
-//				withAttributes:@{NSFontAttributeName: font,
-//								 NSForegroundColorAttributeName: foreColor}];
-			[number drawInRect:(CGRect){rect.size.width - linesWidth - 10 - sz.width, i - 8, sz.width, sz.height}
-				withAttributes:@{NSFontAttributeName: font,
-								 NSForegroundColorAttributeName: foreColor}];
+		
+			if (_isLandscape == NO) {
+				[number drawInRect:(CGRect){rect.size.width - linesWidth - 10 - sz.width, i - 8, sz.width, sz.height}
+					withAttributes:@{NSFontAttributeName: font,
+									 NSForegroundColorAttributeName: foreColor}];
+			} else {
+				[number drawInRect:(CGRect){i - 8, linesWidth + 5, sz.width, sz.height}
+					withAttributes:@{NSFontAttributeName: font,
+									 NSForegroundColorAttributeName: foreColor}];
+			}
 		}
 	}
 }

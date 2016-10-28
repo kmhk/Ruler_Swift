@@ -19,6 +19,8 @@
 		F3B5929F1DC0B8C800559A80 /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F3B5929E1DC0B8C800559A80 /* RulerView.m */; };
 		F3B592A41DC14EB100559A80 /* sens.png in Resources */ = {isa = PBXBuildFile; fileRef = F3B592A21DC14EB100559A80 /* sens.png */; };
 		F3B592A61DC1623D00559A80 /* reset.png in Resources */ = {isa = PBXBuildFile; fileRef = F3B592A51DC1623D00559A80 /* reset.png */; };
+		F3DFAD0C1DC3770300B148AC /* ruler_bg_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F3DFAD0B1DC3770300B148AC /* ruler_bg_landscape.png */; };
+		F3DFAD0E1DC3978A00B148AC /* reset_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = F3DFAD0D1DC3978A00B148AC /* reset_landscape.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		F3B5929E1DC0B8C800559A80 /* RulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RulerView.m; sourceTree = "<group>"; };
 		F3B592A21DC14EB100559A80 /* sens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sens.png; path = Resources/sens.png; sourceTree = "<group>"; };
 		F3B592A51DC1623D00559A80 /* reset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reset.png; path = Resources/reset.png; sourceTree = "<group>"; };
+		F3DFAD0B1DC3770300B148AC /* ruler_bg_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ruler_bg_landscape.png; path = Resources/ruler_bg_landscape.png; sourceTree = "<group>"; };
+		F3DFAD0D1DC3978A00B148AC /* reset_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reset_landscape.png; path = Resources/reset_landscape.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,8 @@
 		F3B592A01DC14E9400559A80 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F3DFAD0D1DC3978A00B148AC /* reset_landscape.png */,
+				F3DFAD0B1DC3770300B148AC /* ruler_bg_landscape.png */,
 				3ABE59A41DC2B8CC00080F17 /* ruler_bg.png */,
 				F368C5EA1DC1ECDE00E742A8 /* accel_landscape.png */,
 				F368C5EB1DC1ECDE00E742A8 /* accel_portrait.png */,
@@ -169,9 +175,11 @@
 				F368C5EC1DC1ECDE00E742A8 /* accel_landscape.png in Resources */,
 				3ABE59A51DC2B8CC00080F17 /* ruler_bg.png in Resources */,
 				F3B592A61DC1623D00559A80 /* reset.png in Resources */,
+				F3DFAD0C1DC3770300B148AC /* ruler_bg_landscape.png in Resources */,
 				F368C5ED1DC1ECDE00E742A8 /* accel_portrait.png in Resources */,
 				F3B592A41DC14EB100559A80 /* sens.png in Resources */,
 				F3B592931DC08BBF00559A80 /* LaunchScreen.storyboard in Resources */,
+				F3DFAD0E1DC3978A00B148AC /* reset_landscape.png in Resources */,
 				F3B592901DC08BBF00559A80 /* Assets.xcassets in Resources */,
 				F3B5928E1DC08BBF00559A80 /* Main.storyboard in Resources */,
 			);

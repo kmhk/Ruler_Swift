@@ -16,14 +16,21 @@
 #define MAX_HEIGHT		3000
 #define kACC_WEIGHT		0.0
 
+#define MAX_DELTA		65
+#define MIN_DELTA		-70
+
 
 @interface MainViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *viewContainer;
+@property (weak, nonatomic) IBOutlet UIImageView *viewBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *imgBkSensor;
 @property (weak, nonatomic) IBOutlet UIImageView *imgSensor;
 @property (weak, nonatomic) IBOutlet UILabel *roationLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnReset;
+
 
 @property (nonatomic) RulerView *rulerView;
 @property (nonatomic) CGRect rtSensor;
@@ -54,6 +61,8 @@
 	[super viewDidAppear:animated];
 	
 	_rtSensor = _imgSensor.frame;
+	
+	[self shouldAutorotate];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,21 +71,35 @@
 }
 
 - (BOOL)shouldAutorotate {
-	_scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, MAX_HEIGHT);
+	CGSize sz;
+	NSString *sensorImageName, *bkImageName;
+	if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)) {
+		sz = (CGSize){192, 60};
+		sensorImageName = @"accel_landscape.png";
+		bkImageName = @"ruler_bg.png";
+		_rulerView.isLandscape = NO;
+		_scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, MAX_HEIGHT);
+		
+		_btnReset.frame = CGRectMake((self.view.frame.size.width - 80)/2, 44, 80, 83);
+		[_btnReset setBackgroundImage:[UIImage imageNamed:@"reset.png"] forState:UIControlStateNormal];
+		
+	} else {
+		sz = (CGSize){192, 60};
+		sensorImageName = @"accel_landscape.png";
+		bkImageName = @"ruler_bg_landscape.png";
+		_rulerView.isLandscape = YES;
+		_scrollView.contentSize = CGSizeMake(MAX_HEIGHT, _scrollView.frame.size.height);
+		
+		_btnReset.frame = CGRectMake(44, (self.view.frame.size.height - 80)/2, 83, 80);
+		[_btnReset setBackgroundImage:[UIImage imageNamed:@"reset_landscape.png"] forState:UIControlStateNormal];
+	}
+	
+	_viewContainer.frame = (CGRect){(self.view.frame.size.width - sz.width)/2, (self.view.frame.size.height - sz.height)/2, sz.width, sz.height};
+	_imgBkSensor.image = [UIImage imageNamed:sensorImageName];
+	_viewBackground.image = [UIImage imageNamed:bkImageName];
+	
+	
 	_rulerView.frame = (CGRect){0, 0, _scrollView.contentSize.width, _scrollView.contentSize.height};
-	
-//	CGSize sz;
-//	NSString *sensorImageName;
-//	if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)) {
-//		sz = (CGSize){88, 312};
-//		sensorImageName = @"accel_portrait.png";
-//	} else {
-//		sz = (CGSize){312, 88};
-//		sensorImageName = @"accel_landscape.png";
-//	}
-//	_viewContainer.frame = (CGRect){(self.view.frame.size.width - sz.width)/2, (self.view.frame.size.height - sz.height)/2, sz.width, sz.height};
-//	_imgBkSensor.image = [UIImage imageNamed:sensorImageName];
-	
 	[_rulerView setNeedsDisplay];
 	
 	return YES;
@@ -89,18 +112,34 @@
 - (IBAction)onBtnReset:(id)sender {
 	CGRect rt = [sender frame];
 	
-	[sender setUserInteractionEnabled:NO];
-	[UIView animateWithDuration:0.2 animations:^{
-		[sender setFrame:CGRectOffset(rt, 0, 50)];
-		[_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-	} completion:^(BOOL finished) {
-		
+	if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)) {
+		[sender setUserInteractionEnabled:NO];
 		[UIView animateWithDuration:0.2 animations:^{
-			[sender setFrame:rt];
+			[sender setFrame:CGRectOffset(rt, 0, 50)];
+			[_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 		} completion:^(BOOL finished) {
-			[sender setUserInteractionEnabled:YES];
+			
+			[UIView animateWithDuration:0.2 animations:^{
+				[sender setFrame:rt];
+			} completion:^(BOOL finished) {
+				[sender setUserInteractionEnabled:YES];
+			}];
 		}];
-	}];
+		
+	} else {
+		[sender setUserInteractionEnabled:NO];
+		[UIView animateWithDuration:0.2 animations:^{
+			[sender setFrame:CGRectOffset(rt, 50, 0)];
+			[_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+		} completion:^(BOOL finished) {
+			
+			[UIView animateWithDuration:0.2 animations:^{
+				[sender setFrame:rt];
+			} completion:^(BOOL finished) {
+				[sender setUserInteractionEnabled:YES];
+			}];
+		}];
+	}
 }
 
 
@@ -153,23 +192,36 @@
 			}
 			
 			if (_isRoationInted) {
-				double gravity = sqrt(weakSelf.gravityX * weakSelf.gravityX + weakSelf.gravityY * weakSelf.gravityY + weakSelf.gravityZ * weakSelf.gravityZ);
-				double roationInXY = acos(self.gravityY / gravity) * 180 / M_PI;
-				NSInteger rotationOfXY = (NSInteger)(-180 + acos(weakSelf.gravityZ / gravity) * 180 / M_PI);
-				//weakSelf.roationLabel.text = [NSString stringWithFormat:@"%ld", (long)rotationOfXY];
-				//self.roationLabel.transform = CGAffineTransformMakeRotation(roationInXY);
+//				double gravity = sqrt(weakSelf.gravityX * weakSelf.gravityX + weakSelf.gravityY * weakSelf.gravityY + weakSelf.gravityZ * weakSelf.gravityZ);
+//				BOOL isLandScape = YES;
 				
-				
-				CGFloat flag = (roationInXY - 90.0 < 0)? -1: 1;
-				CGFloat y = (abs(rotationOfXY) % 90) * 2;
-				y = flag * (y > 125? 125.0: y);
-				NSLog(@"%f. %f", roationInXY, y);
-				weakSelf.imgSensor.frame = (CGRect){weakSelf.rtSensor.origin.x, weakSelf.rtSensor.origin.y + y, weakSelf.rtSensor.size.width, weakSelf.rtSensor.size.height};
+				if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)) {
+					int rotationY = (int)(90 + atan2(self.gravityY, self.gravityX) * 180 / M_PI);
+//					self.roationLabel.text = [NSString stringWithFormat:@"%d", rotationY];
+					
+					CGFloat delta = rotationY * 1.5;
+					delta = delta > MAX_DELTA? MAX_DELTA: delta;
+					delta = delta < MIN_DELTA? MIN_DELTA: delta;
+					
+					weakSelf.imgSensor.frame = (CGRect){weakSelf.rtSensor.origin.x - delta, weakSelf.rtSensor.origin.y, weakSelf.rtSensor.size.width, weakSelf.rtSensor.size.height};
+					
+				} else {
+					int rotationY = (int)(atan2(self.gravityY, self.gravityX) * 180 / M_PI);
+					
+					CGFloat delta;
+					delta = rotationY > 0? rotationY - 180: rotationY+180;
+					
+					delta = delta * 1.5;
+					delta = delta > MAX_DELTA? MAX_DELTA: delta;
+					delta = delta < MIN_DELTA? MIN_DELTA: delta;
+//					self.roationLabel.text = [NSString stringWithFormat:@"%d", rotationY];
+					
+					weakSelf.imgSensor.frame = (CGRect){weakSelf.rtSensor.origin.x - delta, weakSelf.rtSensor.origin.y, weakSelf.rtSensor.size.width, weakSelf.rtSensor.size.height};
+				}
 			}
 		}];
 	}
-	
-//	self.updateIntervalLabel.text = [NSString stringWithFormat:@"%f", updateInterval];
+
 }
 
 

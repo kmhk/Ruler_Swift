@@ -10,4 +10,6 @@
 
 @interface RulerView : UIView
 
+@property (nonatomic) BOOL isLandscape;
+
 @end
