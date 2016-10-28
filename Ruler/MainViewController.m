@@ -17,7 +17,7 @@
 
 
 
-@interface MainViewController ()
+@interface MainViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *viewContainer;
@@ -38,6 +38,7 @@
     // Do any additional setup after loading the view.
 	
 	_scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, MAX_HEIGHT);
+
 	_rulerView = [[RulerView alloc] initWithFrame:CGRectMake(0, 0, _scrollView.contentSize.width, _scrollView.contentSize.height)];
 	[_scrollView addSubview:_rulerView];
 	
@@ -146,6 +147,9 @@
 	}
 }
 
-
+#pragma mark - ScrollView Delegate
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+	[scrollView setContentOffset:scrollView.contentOffset animated:NO];
+}
 @end
 

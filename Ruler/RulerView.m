@@ -13,7 +13,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-		
+		self.backgroundColor = [UIColor clearColor];
 	}
 	
 	return self;
@@ -22,7 +22,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super initWithCoder:aDecoder];
 	if (self) {
-		
+		self.backgroundColor = [UIColor clearColor];
 	}
 	
 	return self;
@@ -31,7 +31,7 @@
 - (id)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
 	if (self) {
-		
+		self.backgroundColor = [UIColor clearColor];
 	}
 	
 	return self;
@@ -39,8 +39,8 @@
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-	[[UIColor whiteColor] setFill];
-	UIRectFill(rect);
+//	[[UIColor clearColor] setFill];
+//	UIRectFill(rect);
 	
 	float i;
 	NSInteger count;
