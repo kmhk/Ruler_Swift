@@ -209,12 +209,22 @@
 					int rotationY = (int)(atan2(self.gravityY, self.gravityX) * 180 / M_PI);
 					
 					CGFloat delta;
-					delta = rotationY > 0? rotationY - 180: rotationY+180;
+					if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft) {
+						delta = rotationY > 0? rotationY - 180: rotationY+180;
+						
+						delta = delta * 1.5;
+						delta = delta > MAX_DELTA? MAX_DELTA: delta;
+						delta = delta < MIN_DELTA? MIN_DELTA: delta;
+						
+					} else {
+						delta = rotationY;
+						
+						delta = delta * 1.5;
+						delta = delta > MAX_DELTA? MAX_DELTA: delta;
+						delta = delta < MIN_DELTA? MIN_DELTA: delta;
+					}
 					
-					delta = delta * 1.5;
-					delta = delta > MAX_DELTA? MAX_DELTA: delta;
-					delta = delta < MIN_DELTA? MIN_DELTA: delta;
-//					self.roationLabel.text = [NSString stringWithFormat:@"%d", rotationY];
+					self.roationLabel.text = [NSString stringWithFormat:@"%d", rotationY];
 					
 					weakSelf.imgSensor.frame = (CGRect){weakSelf.rtSensor.origin.x - delta, weakSelf.rtSensor.origin.y, weakSelf.rtSensor.size.width, weakSelf.rtSensor.size.height};
 				}

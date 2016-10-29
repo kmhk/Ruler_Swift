@@ -53,7 +53,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sens.png" translatesAutoresizingMaskIntoConstraints="NO" id="t1Z-qY-0LO">
-                                        <frame key="frameInset" minX="50.96%" minY="60.00%" width="35" height="55"/>
+                                        <frame key="frameInset" minX="50.37%" minY="0.0%" width="55" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
@@ -80,6 +80,6 @@
     <resources>
         <image name="accel_landscape.png" width="758" height="239"/>
         <image name="ruler_bg.png" width="3125" height="5558"/>
-        <image name="sens.png" width="421" height="658"/>
+        <image name="sens.png" width="658" height="421"/>
     </resources>
 </document>
