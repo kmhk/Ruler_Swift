@@ -7,6 +7,7 @@
 //
 
 #import "RulerView.h"
+#include <sys/utsname.h>
 
 @implementation RulerView
 
@@ -43,6 +44,40 @@
 	return self;
 }
 
+- (float)getmmByPPI {
+	float ppm = 0.0;
+	struct utsname systemInfo;
+	uname(&systemInfo);
+	NSString *deviceModel = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+	float scale = [UIScreen mainScreen].scale;
+	
+	NSLog(@"current device mode: %@, scale: %f", deviceModel, scale);
+	
+	if ([deviceModel containsString:@"iPhone1"] || [deviceModel containsString:@"iPhone2"]) { // iPhone3
+		ppm = 163/25.4;
+		
+	} else if ([deviceModel containsString:@"iPhone3"] || [deviceModel containsString:@"iPhone4"]
+			    || [deviceModel containsString:@"iPhone5"]  || [deviceModel containsString:@"iPhone6"]) { // iPhone4, 5
+		ppm = 326/scale/25.4;
+		
+	} else if ([deviceModel containsString:@"iPhone7,2"] || [deviceModel containsString:@"iPhone8,1"]
+			    || [deviceModel containsString:@"iPhone9,1"]  || [deviceModel containsString:@"iPhone9,3"]) { // iPhone 6, 7
+		ppm = 326/scale/25.4;
+		
+	} else if ([deviceModel containsString:@"iPhone7,1"] || [deviceModel containsString:@"iPhone8,2"]
+			    || [deviceModel containsString:@"iPhone9,2"]  || [deviceModel containsString:@"iPhone9,4"]) { // iPhone 6+, 7+
+		ppm = 401/scale/25.4;
+		
+	} else if ([deviceModel containsString:@"iPad"]){
+		ppm = 132/25.4;
+		
+	} else {
+		ppm = 163/25.4;
+	}
+	
+	return ppm;
+}
+
 - (void)drawRect:(CGRect)rect {
     // Drawing code
 //	[[UIColor clearColor] setFill];
@@ -51,7 +86,7 @@
 	float i;
 	NSInteger count;
 	
-	float linesDist = 163.0/25.4; // ppi/mm per inch (regular size iPad would be 132.0)
+	float linesDist = [self getmmByPPI]; // ppi/mm per inch (regular size iPad would be 132.0)
 	
 	float linesWidthShort = 15.0;
 	float linesWidthLong = 24.0;
